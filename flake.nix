@@ -27,9 +27,7 @@
           let
             pkgs = nixpkgs.legacyPackages.${system};
           in {
-            default = pkgs.callPackage ./nixos/packages/default.nix {};
-            givc-agent = pkgs.callPackage ./nixos/packages/givc-agent.nix {};
-            givc-admin = pkgs.callPackage ./nixos/packages/givc-admin.nix {};
+            default = pkgs.callPackage ./nixos/packages/givc-app.nix {};
             givc-app = pkgs.callPackage ./nixos/packages/givc-app.nix {};
           };
 
@@ -53,5 +51,10 @@
             sysvm = import ./nixos/modules/sysvm.nix;
             appvm = import ./nixos/modules/appvm.nix;
           };
+
+        # Overlays
+        overlays.default = (final: prev:{
+          givc-app = prev.callPackage ./nixos/packages/givc-app.nix { pkgs=prev; };
+        });
       };
 }
