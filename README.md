@@ -21,7 +21,7 @@ channel.
 This project is only a proof of concept to showcase possible intervm communication
 and modules using gRPC.
 
-The project exposes NixOS modules, which aim to be used with ().
+The project exposes NixOS modules, which aim to be used with the [Ghaf Framework] (https://github.com/mbssrc/ghaf/tree/givc-test).
 
 ## License
 
