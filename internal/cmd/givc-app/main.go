@@ -31,16 +31,10 @@ func main() {
 	port := flag.String("port", "9000", "Host port")
 	protocol := flag.String("protocol", "tcp", "Transport protocol")
 	notls := flag.Bool("notls", false, "Disable TLS")
-
 	flag.Parse()
 
-	withTLS := true
-	if *notls {
-		withTLS = false
-	}
-
 	var tlsConfig *tls.Config
-	if withTLS {
+	if !*notls {
 
 		// @TODO add path and file checks
 

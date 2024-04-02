@@ -129,7 +129,8 @@ func (svc *AdminService) StartApplication(name string) (string, error) {
 		return cmdFailure, fmt.Errorf("error determining system state")
 	}
 	if !isRunning {
-		return cmdFailure, fmt.Errorf("cannot start application, not all required system-vms are registered")
+		// return cmdFailure, fmt.Errorf("cannot start application, not all required system-vms are registered")
+		log.Warnf("not all required system-vms are registered")
 	}
 
 	// Check registry for applications' systemd agent

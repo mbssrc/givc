@@ -47,14 +47,14 @@ func main() {
 	parentName := os.Getenv("PARENT")
 
 	var services []string
-	services_string, services_present := os.LookupEnv("SERVICES")
-	if services_present {
-		services = strings.Split(services_string, " ")
+	servicesString, servicesPresent := os.LookupEnv("SERVICES")
+	if servicesPresent {
+		services = strings.Split(servicesString, " ")
 	}
 
 	var applications map[string]string
-	jsonApplicationString := os.Getenv("APPLICATIONS")
-	if jsonApplicationString != "" {
+	jsonApplicationString, appPresent := os.LookupEnv("APPLICATIONS")
+	if appPresent && jsonApplicationString != "" {
 		applications = make(map[string]string)
 		err := json.Unmarshal([]byte(jsonApplicationString), &applications)
 		if err != nil {
@@ -167,7 +167,7 @@ func main() {
 	}
 	// Add services
 	cfgAgent.Services = append(cfgAgent.Services, agentServiceName)
-	if services_present {
+	if servicesPresent {
 		cfgAgent.Services = append(cfgAgent.Services, services...)
 	}
 	log.Infof("Started with services: %v\n", cfgAgent.Services)
