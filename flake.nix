@@ -27,7 +27,7 @@
           let
             pkgs = nixpkgs.legacyPackages.${system};
           in {
-            default = pkgs.callPackage ./nixos/packages/givc-app.nix {};
+            default = pkgs.callPackage ./nixos/packages/default.nix {};
             givc-app = pkgs.callPackage ./nixos/packages/givc-app.nix {};
           };
 
