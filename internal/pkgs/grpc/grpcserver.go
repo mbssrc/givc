@@ -34,8 +34,7 @@ type GrpcServerConfig struct {
 }
 
 type GrpcServer struct {
-	config *GrpcServerConfig
-	// sockpath   string
+	config     *GrpcServerConfig
 	grpcServer *grpc.Server
 }
 
@@ -53,24 +52,6 @@ func NewGrpcServerConfig(cfg *types.EndpointConfig) *GrpcServerConfig {
 }
 
 func NewServer(cfg *GrpcServerConfig) (*GrpcServer, error) {
-	// // Unix Socket path
-	// var sockpath string
-
-	// if len(conf.BindSocket) > 0 {
-	// 	sockpath = conf.BindSocket
-	// } else {
-	// 	sockpath = filepath.Join("/run", fmt.Sprintf("%s_%d.sock", filepath.Base(os.Args[0]), os.Getpid()))
-	// }
-
-	// if runtime.GOOS == "linux" {
-	// 	sockpath = "@" + sockpath
-	// }
-
-	// // Composite Server
-	// srv := Server{
-	// 	conf:     conf,
-	// 	sockpath: sockpath,
-	// }
 
 	// GRPC Server
 	srv := GrpcServer{
@@ -107,19 +88,7 @@ func NewServer(cfg *GrpcServerConfig) (*GrpcServer, error) {
 }
 
 func (s *GrpcServer) ListenAndServe(ctx context.Context) error {
-	// grpcLL, err := s.config.Listeners()
-	// if err != nil {
-	// 	return err
-	// }
 
-	// Default GRPC on Unix Socket
-	// if l, err := net.Listen("unix", s.sockpath); err == nil {
-	// 	defer l.Close()
-
-	// 	grpcLL = append(grpcLL, l)
-	// } else {
-	// 	return err
-	// }
 	listener, err := net.Listen(s.config.Protocol, s.config.Address+":"+s.config.Port)
 	if err != nil {
 		return err
@@ -135,21 +104,6 @@ func (s *GrpcServer) ListenAndServe(ctx context.Context) error {
 
 		close(idleConnsClosed)
 	}()
-
-	// for _, l := range grpcLL {
-	// 	listener := l
-	// 	group.Go(func() error {
-	// 		log.WithFields(log.Fields{"addr": listener.Addr().String()}).Info("Starting GRPC server")
-
-	// 		if err := s.grpcServer.Serve(listener); err != nil {
-	// 			return err
-	// 		}
-
-	// 		log.WithFields(log.Fields{"addr": listener.Addr().String()}).Info("GRPC server stopped")
-
-	// 		return nil
-	// 	})
-	// }
 
 	group.Go(func() error {
 		log.WithFields(log.Fields{"addr": listener.Addr().String()}).Info("Starting GRPC server")
