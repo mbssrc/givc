@@ -1,3 +1,5 @@
+{ self }:
+
 {
   config,
   pkgs,
@@ -5,7 +7,7 @@
   ...
 }: let
   cfg = config.givc.admin;
-  givc-admin = pkgs.callPackage ../packages/givc-admin.nix {};
+  givc-admin = self.packages.${pkgs.stdenv.hostPlatform.system}.givc-admin-rs;
 in
   with lib; {
 
