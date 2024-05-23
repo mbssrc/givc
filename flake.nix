@@ -6,9 +6,13 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
+    crane = {
+      url = "github:ipetkov/crane";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, flake-utils, devshell, nixpkgs }:
+  outputs = inputs@{ self, flake-utils, devshell, nixpkgs, crane }:
     let
       # Generate a user-friendly version number
       # to work with older version of flakes
@@ -29,6 +33,7 @@
           in {
             default = pkgs.callPackage ./nixos/packages/default.nix {};
             givc-app = pkgs.callPackage ./nixos/packages/givc-app.nix {};
+            givc-admin-rs = pkgs.callPackage ./nixos/packages/givc-admin-rs.nix { inherit crane; src = ./.; };
           };
 
         # DevShells
