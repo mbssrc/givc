@@ -3,7 +3,12 @@ packages = [
     "go",
     "gotests",
     "gopls",
+    "rustc",
+    "rustfmt",
+    "cargo",
+    "grpcurl",
     "protobuf",
     "protoc-gen-go",
-    "protoc-gen-go-grpc"
+    "protoc-gen-go-grpc",
+    "pkgs.stdenv.cc"
 ]
